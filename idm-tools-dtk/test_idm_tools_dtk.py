@@ -1175,7 +1175,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         df = DemographicsBuiltinFeatureConfiguration()
         self.config_params = df.get_config_params()
         self.assertEqual(
-            3,
+            9,
             len(self.config_params)
         )
         self.assertTrue(
@@ -1200,7 +1200,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         )
         self.config_params = df.get_config_params()
         self.assertEqual(
-            3,
+            9,
             len(self.config_params)
         )
         self.assertTrue(
@@ -1223,7 +1223,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         )
         self.config_params = df.get_config_params()
         self.assertEqual(
-            2,
+            8,
             len(self.config_params)
         )
         self.assertFalse(
@@ -1251,7 +1251,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         df.add_overlay(overlay_two)
         self.config_params = df.get_config_params()
         self.assertEqual(
-            2,
+            8,
             len(self.config_params)
         )
         self.assertFalse(
