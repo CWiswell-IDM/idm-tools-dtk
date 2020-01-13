@@ -1,4 +1,5 @@
 import json
+from os import path, getcwd
 
 from vital_dynamics_configuration import VitalDynamicsFeatureConfiguration
 from demographics_feature_configuration import DemographicsFeatureConfiguration, DemographicsBuiltinFeatureConfiguration
@@ -142,7 +143,8 @@ class EmodSimulationConfiguration(object):
         # TODO: then raise a ValueException
         pass
 
-    def write_config_file(self, config_filename:str="config.json"):
+    def write_config_file(self, config_filename:str="config.json",
+                          config_path:str=None):
         # TODO: build_parameters if not done yet
         if not self.parameters:
             self.build_parameters()
@@ -150,6 +152,9 @@ class EmodSimulationConfiguration(object):
         my_json["parameters"] = self.parameters
         my_json["assumptions"] = self.assumptions
         my_json["notes"] = "Generated from prototype idm-tools-dtk code"
-        with open(config_filename, 'w') as outfile:
+        if not config_path:
+            config_path = getcwd()
+        fullpath = path.join(config_path, config_filename)
+        with open(fullpath, 'w') as outfile:
             json.dump(my_json, outfile, indent=4, sort_keys=True)
 
