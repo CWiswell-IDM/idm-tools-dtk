@@ -151,7 +151,7 @@ class EmodSimulationConfiguration(object):
         my_json = {}
         my_json["parameters"] = self.parameters
         my_json["assumptions"] = self.assumptions
-        my_json["notes"] = "Generated from prototype idm-tools-dtk code"
+        my_json["notes"] = "Generated from prototype idm_tools_dtk code"
         if not config_path:
             config_path = getcwd()
         fullpath = path.join(config_path, config_filename)
