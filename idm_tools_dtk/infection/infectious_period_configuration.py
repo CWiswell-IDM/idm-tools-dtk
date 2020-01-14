@@ -1,5 +1,4 @@
-from distrubution_configuration import DCParams, DCValues, DistributionConfiguration
-
+from idm_tools_dtk.utilities.distrubution_configuration import DCParams, DCValues, DistributionConfiguration
 
 class InfectiousConfiguration(DistributionConfiguration):
     def __init__(self, duration_type, infectivity=3.5):

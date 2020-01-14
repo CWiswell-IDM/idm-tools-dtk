@@ -1,5 +1,5 @@
 from enum import Enum
-from feature_configuration import FeatureConfiguration
+from . import feature_configuration
 
 class DCParams(Enum):
     type_key = "Distribution"
@@ -32,7 +32,7 @@ class DCValues(Enum):
     poisson_mean = "Poisson_Mean"
 
 
-class DistributionConfiguration(FeatureConfiguration):
+class DistributionConfiguration(feature_configuration.FeatureConfiguration):
     def __init__(self, model_property):
         super().__init__(feature_name=model_property)
         self.model_property = model_property

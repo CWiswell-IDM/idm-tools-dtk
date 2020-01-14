@@ -1,5 +1,5 @@
-from disease_configuration import DCParams, DistributionConfiguration
-from feature_configuration import EnableableFeatureConfiguration
+from idm_tools_dtk.utilities.distrubution_configuration import DCParams, DistributionConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class InfectivityKeys:
     base = "Base_Infectivity"

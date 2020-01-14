@@ -1,5 +1,5 @@
-from feature_configuration import EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
-from vital_dynamics_configuration import VitalDynamicsKeys
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
+from idm_tools_dtk.vital_dynamics.vital_dynamics_configuration import VitalDynamicsKeys
 
 class BirthKeys:
     enable = VitalDynamicsKeys.birth
@@ -53,6 +53,7 @@ class BirthFeatureConfiguration(EnableableFeatureConfiguration):
         super().__init__(feature_name="Birth",
                          enable_parameter=BirthKeys.enable,
                          parent_parameter=VitalDynamicsKeys.enable)
+        # TODO: Figure out how to roll the various birth features in here, and collect assumptions
         for k in BirthKeys.all_keys:
             self.feature_params[k] = None
             pass

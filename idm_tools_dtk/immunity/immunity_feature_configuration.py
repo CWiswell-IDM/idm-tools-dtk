@@ -1,4 +1,4 @@
-from feature_configuration import EnableableFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class ImmunityFeatureKeys:
     enable = "Enable_Immunity"
@@ -13,8 +13,8 @@ class ImmunityFeatureConfiguration(EnableableFeatureConfiguration):
     def __init__(self, enable_immunity,
                  acquisition_multiplier: float=1.0,
 
-                 mortality_mutliplier=None,
-                 transmission_multiplier=None):
+                 mortality_mutliplier:float=1.0,
+                 transmission_multiplier:float=1.0):
         super().__init__("Immunity", ImmunityFeatureKeys.enable)
         self.master_parameter_value = enable_immunity
         for k in ImmunityFeatureKeys.all_keys:

@@ -1,5 +1,5 @@
-from feature_configuration import EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
-from vital_dynamics_configuration import VitalDynamicsKeys
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
+from idm_tools_dtk.vital_dynamics.vital_dynamics_configuration import VitalDynamicsKeys
 
 class DeathKeys:
     enable = VitalDynamicsKeys.natural_mortality
@@ -27,6 +27,7 @@ class DeathFeatureConfiguration(EnableableFeatureConfiguration):
         super().__init__(feature_name="Death",
                          enable_parameter=DeathKeys.enable,
                          parent_parameter=VitalDynamicsKeys.enable)
+        # TODO: Might be worth renaming this class to DeathRateFree and creating an abstract class
         for k in DeathKeys.all_keys:
             self.feature_params[k] = None
             pass

@@ -1,4 +1,4 @@
-from feature_configuration import EnableableFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class VitalDynamicsKeys:
     enable = "Enable_Vital_Dynamics"
@@ -9,10 +9,12 @@ class VitalDynamicsKeys:
     pass
 
 class VitalDynamicsFeatureConfiguration(EnableableFeatureConfiguration):
-    def __init__(self, enable, aging=False,
-                 birth=False, natural_mortality=False):
+    def __init__(self, enable, aging:bool=False,
+                 birth:bool=False, natural_mortality:bool=False):
         super().__init__(feature_name="Vital_Dynamics",
                          enable_parameter=VitalDynamicsKeys.enable)
+        # TODO: if enabled, should take a DeathDependence object and BirthConfig object here.
+        # TODO: build assupmtions and hand them to emod_simulation_configuration
         for k in VitalDynamicsKeys.all_keys:
             self.feature_params[k] = None
             pass

@@ -1,4 +1,4 @@
-from distrubution_configuration import DCParams, DCValues, DistributionConfiguration
+from idm_tools_dtk.utilities.distrubution_configuration import DCParams, DCValues, DistributionConfiguration
 
 class IncubationConfiguration(DistributionConfiguration):
     def __init__(self, duration_type):

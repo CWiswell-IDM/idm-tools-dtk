@@ -1,4 +1,4 @@
-from feature_configuration import FeatureConfiguration, EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import FeatureConfiguration, EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
 
 class PopulationScalingKeys:
     type_enum = "Population_Scale_Type"

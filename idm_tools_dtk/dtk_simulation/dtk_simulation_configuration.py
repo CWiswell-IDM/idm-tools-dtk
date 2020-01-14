@@ -1,5 +1,5 @@
-from feature_configuration import FeatureConfiguration, EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
-from simulation_miscellaneous_configs import SimulationDurationFeatureConfiguration, \
+from idm_tools_dtk.utilities.feature_configuration import FeatureConfiguration, EnableableFeatureConfiguration, EnumeratedFeatureConfiguration
+from idm_tools_dtk.dtk_simulation.simulation_miscellaneous_configs import SimulationDurationFeatureConfiguration, \
     PopulationScalingFeatureConfiguration
 
 class SimulationKeys:
@@ -253,7 +253,7 @@ class SimulationConfiguration(FeatureConfiguration):
         super().__init__(
             feature_name="DTK Simulation"
         )
-        self.assumptions = [] # TODO: roll up these assumptions into the EMOD configuration object
+        self.assumptions = {} # TODO: roll up these assumptions into the EMOD configuration object
 
         if sim_type in SimulationKeys.sim_types_enum.all_types:
             self.feature_params[SimulationKeys.type_enum] = sim_type
@@ -284,25 +284,25 @@ class SimulationConfiguration(FeatureConfiguration):
 
         if not reporting_config:
             reporting_config = ReportingConfiguration()
-            self.assumptions.append(f"{reporting_config.feature_name} assumptions: {reporting_config.get_config_params()}.")
+            self.assumptions[reporting_config.feature_name] = reporting_config.get_config_params()
             pass
         self.reporting_config = reporting_config
 
         if not duration_config:
             duration_config = SimulationDurationFeatureConfiguration(365)
-            self.assumptions.append(f"{duration_config.feature_name} assumptions: {duration_config.get_config_params()}.")
+            self.assumptions[duration_config.feature_name] = duration_config.get_config_params()
             pass
         self.duration_config = duration_config
 
         if not population_scaling_config:
             population_scaling_config = PopulationScalingFeatureConfiguration()
-            self.assumptions.append(f"{population_scaling_config.feature_name} assumptions: {population_scaling_config.get_config_params()}.")
+            self.assumptions[population_scaling_config.feature_name] = population_scaling_config.get_config_params()
             pass
         self.scaling_config = population_scaling_config
 
         if not serialization_config:
             serialization_config = SerializationConfiguration(serial_type=SerializationKeys.enum_options.none)
-            self.assumptions.append(f"{serialization_config.feature_name} assumptions: {serialization_config.get_config_params()}")
+            self.assumptions[serialization_config.feature_name] = serialization_config.get_config_params()
             pass
         self.serialization_config = serialization_config
 

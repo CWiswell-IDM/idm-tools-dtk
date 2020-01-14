@@ -1,11 +1,15 @@
 import unittest
 __unittest = True
 
-from test_idm_tools_dtk import IdmToolsDtkTest
-from demographics_feature_configuration import DemographicsKeys, \
+from idm_tools_dtk.test_idm_tools_dtk import IdmToolsDtkTest
+from idm_tools_dtk.demographics.demographics_feature_configuration import DemographicsKeys, \
     DemographicsBuiltinFeatureConfiguration, \
     DemographicsCustomFeatureConfiguration
+from idm_tools_dtk.demographics.initial_susceptibility_feature_configuration import SusceptibilityDistributionKeys, \
+    InitialSusceptibilityFeatureConfiguration
 
+
+INITIAL_SUSCEPTIBILITY_ENABLE_KEY = SusceptibilityDistributionKeys.enable
 
 class DemographicsFeatureTest(IdmToolsDtkTest):
 
@@ -116,6 +120,62 @@ class DemographicsFeatureTest(IdmToolsDtkTest):
             overlay_two,
             filenames_array[2]
         )
+        pass
+
+    # endregion
+
+    # region Initial Susceptibility
+
+    def test_initial_susceptibility_disabled(self):
+        i_s = InitialSusceptibilityFeatureConfiguration(enable=False)
+        self.config_params = i_s.get_config_params()
+        self.assertEqual(1, len(self.config_params))
+        self.assertIn(INITIAL_SUSCEPTIBILITY_ENABLE_KEY, self.config_params,
+                      f"key {INITIAL_SUSCEPTIBILITY_ENABLE_KEY} should be in params. Instead {self.config_params}.")
+        config_value = self.config_params[INITIAL_SUSCEPTIBILITY_ENABLE_KEY]
+        self.assertFalse(config_value, f"{INITIAL_SUSCEPTIBILITY_ENABLE_KEY} should be set to False. Got {config_value}.")
+        pass
+
+    def test_initial_susceptibility_simple_specified(self):
+        good_distro_params = {
+            'distro_flag' : 3,
+            'distro_param1' : 0.4,
+            'distro_param2' : 0.1
+        }
+        i_s = InitialSusceptibilityFeatureConfiguration(
+            enable=True,
+            distribution_type=SusceptibilityDistributionKeys.enum_options.simple,
+            simple_distro_params=good_distro_params
+        )
+        self.config_params = i_s.get_config_params()
+        self.assertEqual(2, len(self.config_params))
+        config_value = self.config_params[INITIAL_SUSCEPTIBILITY_ENABLE_KEY]
+        self.assertTrue(config_value, "Initial Susceptibility Distribution should be enabled.")
+        output_demo_params = i_s.get_demographics_params()
+        for k in good_distro_params:
+            self.assertIn(k, output_demo_params, f"Key {k} should be found in demo params. Had {output_demo_params}.")
+            self.assertEqual(good_distro_params[k], output_demo_params[k], f"Values for {k} should be equal.")
+        pass
+
+    def test_initial_susceptibility_complex_specified(self):
+        good_complex_tables = {
+            'node1_distro' : [[1, 2, 3],[2, 3, 4],[3, 4, 5]],
+            'node2_distro' : [[0, 1, 1],[0, 0, 1],[0, 0, 0]],
+            'node3_distro' : [[0, 0, 1],[0, 1, 0],[1, 0, 0]]
+        }
+        i_s = InitialSusceptibilityFeatureConfiguration(
+            enable=True,
+            distribution_type=SusceptibilityDistributionKeys.enum_options.complex,
+            complex_distribution_tables=good_complex_tables
+        )
+        self.config_params = i_s.get_config_params()
+        self.assertEqual(2, len(self.config_params))
+        config_value = self.config_params[INITIAL_SUSCEPTIBILITY_ENABLE_KEY]
+        self.assertTrue(config_value, "Initial Susceptibility Distribution should be enabled.")
+        output_demo_params = i_s.get_demographics_params()
+        for k in good_complex_tables:
+            self.assertIn(k, output_demo_params, f"Key {k} should be found in demo params. Had {output_demo_params}.")
+            self.assertEqual(good_complex_tables[k], output_demo_params[k], f"Values for {k} should be equal.")
         pass
 
     # endregion

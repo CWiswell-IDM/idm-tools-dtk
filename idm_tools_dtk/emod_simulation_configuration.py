@@ -1,16 +1,16 @@
 import json
 from os import path, getcwd
 
-from vital_dynamics_configuration import VitalDynamicsFeatureConfiguration
-from demographics_feature_configuration import DemographicsFeatureConfiguration, DemographicsBuiltinFeatureConfiguration
-from immunity_feature_configuration import ImmunityFeatureConfiguration
-from infectious_period_configuration import InfectiousConfiguration, InfectiousConfigurationConstant
-from incubation_period_configuration import IncubationConfiguration, IncubationConfigurationConstant
-from mortality_feature_configuration import DiseaseMortalityFeatureConfiguration
-from individual_sampling_feature_configuration import IndividualSamplingFeatureConfiguration
-from dtk_simulation_configuration import SimulationConfiguration
-from infectivity_feature_configuration import InfectivityConfiguration, InfectivityConfigurationConstant, InfectivityScalingFeatureConfiguration
-from straintracking_feature_configuration import StrainTrackingFeatureConfiguration
+from idm_tools_dtk.vital_dynamics.vital_dynamics_configuration import VitalDynamicsFeatureConfiguration
+from idm_tools_dtk.demographics.demographics_feature_configuration import DemographicsFeatureConfiguration, DemographicsBuiltinFeatureConfiguration
+from idm_tools_dtk.immunity.immunity_feature_configuration import ImmunityFeatureConfiguration
+from idm_tools_dtk.infection.infectious_period_configuration import InfectiousConfiguration, InfectiousConfigurationConstant
+from idm_tools_dtk.infection.incubation_period_configuration import IncubationConfiguration, IncubationConfigurationConstant
+from idm_tools_dtk.infection.mortality_feature_configuration import DiseaseMortalityFeatureConfiguration
+from idm_tools_dtk.individual_sampling.individual_sampling_feature_configuration import IndividualSamplingFeatureConfiguration
+from idm_tools_dtk.dtk_simulation.dtk_simulation_configuration import SimulationConfiguration
+from idm_tools_dtk.infection.infectivity_feature_configuration import InfectivityConfiguration, InfectivityConfigurationConstant, InfectivityScalingFeatureConfiguration
+from idm_tools_dtk.infection.straintracking_feature_configuration import StrainTrackingFeatureConfiguration
 
 
 class EmodSimulationConfiguration(object):
@@ -27,7 +27,7 @@ class EmodSimulationConfiguration(object):
                  straintracking_config:StrainTrackingFeatureConfiguration=None,
                  sim_config:SimulationConfiguration=None):
         self.parameters = {}
-        self.assumptions = [] # TODO: The assumptions object isn't great as a list. refactor as a dictionary.
+        self.assumptions = {}
         self.demo_config = demo_config
         self.vital_config = vital_config
         self.immunity_config = immunity_config
@@ -46,48 +46,50 @@ class EmodSimulationConfiguration(object):
         # TODO: Populate assumptions along the way
         if not self.demo_config:
             tmp_config = DemographicsBuiltinFeatureConfiguration()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.demo_config = tmp_config
         if not self.vital_config:
             tmp_config = VitalDynamicsFeatureConfiguration(enable=False)
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.vital_config = tmp_config
         if not self.immunity_config:
             tmp_config = ImmunityFeatureConfiguration(enable_immunity=False)
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.immunity_config = tmp_config
         if not self.infectious_config:
             tmp_config = InfectiousConfigurationConstant()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.infectious_config = tmp_config
         if not self.infectivity_config:
             tmp_config = InfectivityConfigurationConstant()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.infectivity_config = tmp_config
         if not self.infectivity_scaling_config:
             tmp_config = InfectivityScalingFeatureConfiguration()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.infectivity_scaling_config = tmp_config
         if not self.incubation_config:
             tmp_config = IncubationConfigurationConstant()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.incubation_config = tmp_config
         if not self.disease_mortality_config:
             tmp_config = DiseaseMortalityFeatureConfiguration(enable=False)
-            self.assumptions.append((f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}."))
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.disease_mortality_config = tmp_config
         if not self.straintracking_config:
             tmp_config = StrainTrackingFeatureConfiguration(enable=False)
-            self.assumptions.append((f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}."))
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.straintracking_config = tmp_config
         if not self.individual_sampling_config:
             tmp_config = IndividualSamplingFeatureConfiguration()
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.individual_sampling_config = tmp_config
         if not self.sim_config:
             tmp_config = SimulationConfiguration("GENERIC_SIM")
-            self.assumptions.append(f"{tmp_config.feature_name} assumptions: {tmp_config.get_config_params()}.")
+            self.assumptions[tmp_config.feature_name] = tmp_config.get_config_params()
             self.sim_config = tmp_config
+        else:
+            self.assumptions[self.sim_config.feature_name] = self.sim_config.assumptions
         pass
 
     def build_parameters(self):
@@ -142,6 +144,12 @@ class EmodSimulationConfiguration(object):
         # TODO: assemble a list of contradictions / error conditions and write them out to file
         # TODO: then raise a ValueException
         pass
+
+    def get_parameters(self):
+        if not self.parameters:
+            self.build_parameters()
+            pass
+        return self.parameters
 
     def write_config_file(self, config_filename:str="config.json",
                           config_path:str=None):

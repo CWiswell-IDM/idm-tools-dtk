@@ -1,4 +1,4 @@
-from feature_configuration import EnableableFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class SusceptibilityDistributionKeys:
     enable = "Enable_Initial_Susceptibility_Distribution"

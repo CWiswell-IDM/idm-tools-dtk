@@ -1,16 +1,16 @@
 import unittest
 __unittest = True
 
-from test_idm_tools_dtk import IdmToolsDtkTest
+from idm_tools_dtk.test_idm_tools_dtk import IdmToolsDtkTest
 
-from birth_feature_configuration import BirthKeys, \
+from idm_tools_dtk.vital_dynamics.birth_feature_configuration import BirthKeys, \
     BirthRateTimeDependenceKeys, \
     BirthFeatureConfiguration, \
     BirthRateSinusoidalTimeDependenceFeatureConfiguration, \
     BirthRateBoxcarTimeDependenceFeatureConfiguration, \
     BirthRateNoTimeDependenceFeatureConfiguration, \
     BirthRateDependenceFeatureConfiguration, BirthRateDependenceKeys
-from death_feature_configuration import DeathKeys, \
+from idm_tools_dtk.vital_dynamics.death_feature_configuration import DeathKeys, \
     DeathFeatureConfiguration, \
     DeathRateDependenceKeys, \
     DeathAgeAndGenderFeatureConfiguration, \

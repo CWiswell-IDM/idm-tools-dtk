@@ -4,7 +4,7 @@ class FeatureConfiguration():
         self.master_parameter = None
         self.master_parameter_value = None
         self.feature_params = {}
-        self.config_keys = {}
+        self.assumptions = {}
         pass
 
     def get_config_params(self):

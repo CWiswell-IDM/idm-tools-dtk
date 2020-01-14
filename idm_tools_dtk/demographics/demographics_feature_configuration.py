@@ -1,4 +1,4 @@
-from feature_configuration import EnableableFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class DemographicsKeys:
     enable = "Enable_Demographics_Builtin"

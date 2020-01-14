@@ -1,4 +1,4 @@
-from feature_configuration import EnumeratedFeatureConfiguration
+from idm_tools_dtk.utilities.feature_configuration import EnumeratedFeatureConfiguration
 
 class IndividualSamplingKeys:
     type_enum = "Individual_Sampling_Type"
