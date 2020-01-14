@@ -1,4 +1,4 @@
-from disease_configuration import DCParams, DCValues, DistributionConfiguration
+from distrubution_configuration import DCParams, DCValues, DistributionConfiguration
 
 
 class InfectiousConfiguration(DistributionConfiguration):
