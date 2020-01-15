@@ -105,18 +105,18 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
     def test_immune_decay_disabled(self):
         decay_feature = ImmuneDecayFeatureConfiguration(enable_decay=False)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(1, len(self.config_params))
+        self.assertEqual(5, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertFalse(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be False.")
         pass
 
 
     def test_immune_decay_enabled_specified(self):
-        ack_rate = 0.2,
-        ack_duration_before = 5,
-        ded_rate = 0.3,
-        ded_duration_before = 6,
-        txn_rate = 0.1,
+        ack_rate = 0.2
+        ack_duration_before = 5
+        ded_rate = 0.3
+        ded_duration_before = 6
+        txn_rate = 0.1
         txn_duration_before = 7
         decay_feature = ImmuneDecayFeatureConfiguration(enable_decay=True,
                                                         acquisition_rate=ack_rate,
@@ -126,7 +126,7 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
                                                         transmission_rate=txn_rate,
                                                         transmission_duration_before=txn_duration_before)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(7, len(self.config_params))
+        self.assertEqual(11, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertTrue(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be True.")
         self.assertEqual(ack_rate, self.config_params[ImmuneDecayKeys.acquisition_rate],
@@ -145,11 +145,11 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
 
 
     def test_immune_decay_enabled_specified_full_sim(self):
-        ack_rate = 0.2,
-        ack_duration_before = 5,
-        ded_rate = 0.3,
-        ded_duration_before = 6,
-        txn_rate = 0.1,
+        ack_rate = 0.2
+        ack_duration_before = 5
+        ded_rate = 0.3
+        ded_duration_before = 6
+        txn_rate = 0.1
         txn_duration_before = 7
         decay_feature = ImmuneDecayFeatureConfiguration(enable_decay=True,
                                                         acquisition_rate=ack_rate,
@@ -158,11 +158,9 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
                                                         mortality_duration_before=ded_duration_before,
                                                         transmission_rate=txn_rate,
                                                         transmission_duration_before=txn_duration_before)
-        self.assertEqual(7, len(decay_feature.get_config_params()))
+        self.assertEqual(11, len(decay_feature.get_config_params()))
         emod_sim = EmodSimulationConfiguration(immunity_config=decay_feature)
         self.config_params = emod_sim.get_parameters()
-        self.config_params = decay_feature.get_config_params()
-        self.assertEqual(7, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertTrue(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be True.")
         self.assertEqual(ack_rate, self.config_params[ImmuneDecayKeys.acquisition_rate],
@@ -181,11 +179,11 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
 
 
     def test_immune_decay_disabled_specified(self):
-        ack_rate = 0.2,
-        ack_duration_before = 5,
-        ded_rate = 0.3,
-        ded_duration_before = 6,
-        txn_rate = 0.1,
+        ack_rate = 0.2
+        ack_duration_before = 5
+        ded_rate = 0.3
+        ded_duration_before = 6
+        txn_rate = 0.1
         txn_duration_before = 7
         decay_feature = ImmuneDecayFeatureConfiguration(enable_decay=False,
                                                         acquisition_rate=ack_rate,
@@ -195,7 +193,7 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
                                                         transmission_rate=txn_rate,
                                                         transmission_duration_before=txn_duration_before)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(1, len(self.config_params))
+        self.assertEqual(5, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertFalse(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be True.")
         pass

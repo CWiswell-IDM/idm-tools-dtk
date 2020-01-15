@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="idm-tools-dtk", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="Christian Wiswell",
     author_email="cwiswell@idmod.org",
     description="Tools for building simulation configuration files for EMOD",
