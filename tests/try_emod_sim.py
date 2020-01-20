@@ -1,13 +1,13 @@
 from os import makedirs
 from shutil import rmtree
 
-import emod_simulation_configuration as emod
+import idm_tools_dtk.emod_simulation_configuration as emod
 
 sim = emod.EmodSimulationConfiguration()
 sim.write_config_file("DEBUG_config.json")
 
-from dtk_simulation_configuration import SimulationConfiguration as dtk_sim, SimulationKeys
-from demographics_feature_configuration import DemographicsBuiltinFeatureConfiguration as d_builtin
+from idm_tools_dtk.dtk_simulation.dtk_simulation_configuration import SimulationConfiguration as dtk_sim, SimulationKeys
+from idm_tools_dtk.demographics.demographics_feature_configuration import DemographicsBuiltinFeatureConfiguration as d_builtin
 
 node_populations = [100, 500, 1000]
 my_folder = "DEBUG_example_sims/node_population_sweep"
@@ -24,7 +24,7 @@ for pop in node_populations:
                           config_path=my_folder)
     pass
 
-from simulation_miscellaneous_configs import PopulationScalingFeatureConfiguration as scale_cfg
+from idm_tools_dtk.dtk_simulation.simulation_miscellaneous_configs import PopulationScalingFeatureConfiguration as scale_cfg
 scale_factors = [1.0, 2.0, 5.0]
 my_folder = "DEBUG_example_sims/scale_factor_sweep"
 rmtree(my_folder, ignore_errors=True)
@@ -40,7 +40,7 @@ for sf in scale_factors:
     pass
 pass
 
-from individual_sampling_feature_configuration import IndividualSamplingFixedFeatureConfiguration as fixed_sampling
+from idm_tools_dtk.individual_sampling.individual_sampling_feature_configuration import IndividualSamplingFixedFeatureConfiguration as fixed_sampling
 sample_rates = [1.0, 0.8, 0.5, 0.1]
 my_folder = "DEBUG_example_sims/sampling_rate_population_sweep"
 rmtree(my_folder, ignore_errors=True)
