@@ -1,25 +1,25 @@
 import unittest
 __unittest = True
-from immunity_feature_configuration import ImmunityFeatureConfiguration, ImmunityFeatureKeys
-from immunity_decay_feature_configuration import ImmuneDecayFeatureConfiguration, ImmuneDecayKeys
-from maternal_protection_configuration import MaternalProtectionConfiguration,\
+from idm_tools_dtk.immunity.immunity_feature_configuration import ImmunityFeatureConfiguration, ImmunityFeatureKeys
+from idm_tools_dtk.immunity.immunity_decay_feature_configuration import ImmuneDecayFeatureConfiguration, ImmuneDecayKeys
+from idm_tools_dtk.immunity.maternal_protection_configuration import MaternalProtectionConfiguration,\
     MaternalProtectionConfigurationLinear, MaternalProtectionConfigurationSigmoid,\
     MaternalProtectionKeys
-from initial_susceptibility_feature_configuration import SusceptibilityDistributionKeys, \
+from idm_tools_dtk.demographics.initial_susceptibility_feature_configuration import SusceptibilityDistributionKeys, \
     InitialSusceptibilityFeatureConfiguration
-from birth_feature_configuration import BirthKeys, \
+from idm_tools_dtk.vital_dynamics.birth_feature_configuration import BirthKeys, \
     BirthRateTimeDependenceKeys, \
     BirthFeatureConfiguration, \
     BirthRateSinusoidalTimeDependenceFeatureConfiguration, \
     BirthRateBoxcarTimeDependenceFeatureConfiguration, \
     BirthRateNoTimeDependenceFeatureConfiguration, \
     BirthRateDependenceFeatureConfiguration, BirthRateDependenceKeys
-from death_feature_configuration import DeathKeys, \
+from idm_tools_dtk.vital_dynamics.death_feature_configuration import DeathKeys, \
     DeathFeatureConfiguration, \
     DeathRateDependenceKeys, \
     DeathAgeAndGenderFeatureConfiguration, \
     DeathYearAgeGenderFeatureConfiguration
-from individual_sampling_feature_configuration import IndividualSamplingKeys, \
+from idm_tools_dtk.individual_sampling.individual_sampling_feature_configuration import IndividualSamplingKeys, \
     SamplingAgeGroupKeys, \
     IndividualSamplingFeatureConfiguration, \
     IndividualSamplingFixedFeatureConfiguration, \
@@ -27,7 +27,7 @@ from individual_sampling_feature_configuration import IndividualSamplingKeys, \
     IndividualSamplingAgeGroupSizeFeatureConfiguration, \
     IndividualSamplingPopulationSizeFeatureConfiguration, \
     IndividualSamplingImmuneStateFeatureConfiguration
-from demographics_feature_configuration import DemographicsKeys, \
+from idm_tools_dtk.demographics.demographics_feature_configuration import DemographicsKeys, \
     DemographicsBuiltinFeatureConfiguration, \
     DemographicsCustomFeatureConfiguration
 
@@ -103,7 +103,7 @@ class IdmToolsDtkTest(unittest.TestCase):
     def test_immune_decay_disabled(self):
         decay_feature = ImmuneDecayFeatureConfiguration(enable_decay=False)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(1, len(self.config_params))
+        self.assertEqual(5, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertFalse(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be False.")
         pass
@@ -123,7 +123,7 @@ class IdmToolsDtkTest(unittest.TestCase):
                                                         transmission_rate=txn_rate,
                                                         transmission_duration_before=txn_duration_before)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(7, len(self.config_params))
+        self.assertEqual(11, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertTrue(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be True.")
         self.assertEqual(ack_rate, self.config_params[ImmuneDecayKeys.acquisition_rate],
@@ -155,7 +155,7 @@ class IdmToolsDtkTest(unittest.TestCase):
                                                         transmission_rate=txn_rate,
                                                         transmission_duration_before=txn_duration_before)
         self.config_params = decay_feature.get_config_params()
-        self.assertEqual(1, len(self.config_params))
+        self.assertEqual(5, len(self.config_params))
         self.assertIn(DECAY_ENABLE_KEY, self.config_params)
         self.assertFalse(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be True.")
         pass
@@ -1175,7 +1175,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         df = DemographicsBuiltinFeatureConfiguration()
         self.config_params = df.get_config_params()
         self.assertEqual(
-            3,
+            9,
             len(self.config_params)
         )
         self.assertTrue(
@@ -1200,7 +1200,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         )
         self.config_params = df.get_config_params()
         self.assertEqual(
-            3,
+            9,
             len(self.config_params)
         )
         self.assertTrue(
@@ -1223,7 +1223,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         )
         self.config_params = df.get_config_params()
         self.assertEqual(
-            2,
+            8,
             len(self.config_params)
         )
         self.assertFalse(
@@ -1251,7 +1251,7 @@ class IdmToolsDtkTest(unittest.TestCase):
         df.add_overlay(overlay_two)
         self.config_params = df.get_config_params()
         self.assertEqual(
-            2,
+            8,
             len(self.config_params)
         )
         self.assertFalse(

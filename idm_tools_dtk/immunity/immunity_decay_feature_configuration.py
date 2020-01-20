@@ -1,6 +1,7 @@
 from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 from idm_tools_dtk.immunity.immunity_feature_configuration import ImmunityFeatureConfiguration, ImmunityFeatureKeys
 
+
 class ImmuneDecayKeys:
     enable = "Enable_Immune_Decay"
     acquisition_rate = "Acquisition_Blocking_Immunity_Decay_Rate"
@@ -12,6 +13,7 @@ class ImmuneDecayKeys:
     all_keys = [enable, acquisition_rate, acquisition_duration_before_decay,
                 mortality_rate, mortality_duration_before_decay,
                 transmission_rate, transmission_duration_before_decay]
+
 
 class ImmuneDecayFeatureConfiguration(ImmunityFeatureConfiguration):
     def __init__(self, enable_decay:bool,

@@ -110,7 +110,6 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
         self.assertFalse(self.config_params[DECAY_ENABLE_KEY], "Enable config decay should be False.")
         pass
 
-
     def test_immune_decay_enabled_specified(self):
         ack_rate = 0.2
         ack_duration_before = 5
@@ -142,7 +141,6 @@ class ImmunityFeatureTest(IdmToolsDtkTest):
         self.assertEqual(txn_duration_before, self.config_params[ImmuneDecayKeys.transmission_duration_before_decay],
                          "Acquisition duration before decay should be correct.")
         pass
-
 
     def test_immune_decay_enabled_specified_full_sim(self):
         ack_rate = 0.2
