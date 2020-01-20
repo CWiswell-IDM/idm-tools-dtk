@@ -1,0 +1,12 @@
+
+c:\GitHub\idm-tools-dtk>python setup.py bdist_wheel build
+c:\GitHub\idm-tools-dtk>dir dist
+c:\GitHub\idm-tools-dtk>pip install dist\idm_tools_dtk-0.0.2-py3-none-any.whl --upgrade
+
+c:\GitHub\idm-tools-dtk>python -m twine upload --verbose --repository-url https://packages.idmod.org/api/pypi/idm-pypi-staging/ dist\idm_tools_dtk-0.0.2-py3-none-any.whl
+
+Uploading distributions to https://packages.idmod.org/api/pypi/idm-pypi-staging/
+Enter your username: cwiswell@idmod.org
+Enter your password:
+Uploading idm_tools_dtk-0.0.2-py3-none-any.whl
+100%|¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦| 65.1k/65.1k [00:00<00:00, 178kB/s]
