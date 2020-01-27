@@ -1,18 +1,23 @@
-from idm_tools_dtk.utilities.distrubution_configuration import DCParams, DistributionConfiguration
+from idm_tools_dtk.utilities.distrubution_configuration import DCParams, DCValues, DistributionConfiguration
 from idm_tools_dtk.utilities.feature_configuration import EnableableFeatureConfiguration
 
 class InfectivityKeys:
-    base = "Base_Infectivity"
     updates_per_timestep = "Infection_Updates_Per_Timestep"
     symptomatic_offset = "Symptomatic_Infectious_Offset"
     pass
 
 class InfectivityConfiguration(DistributionConfiguration):
     def __init__(self, duration_type,
-                 updates_per_timestep:int=1,
-                 symptomatic_offset_days:int=0):
-        super().__init__("Infectivity")
+                 updates_per_timestep:int=None,
+                 symptomatic_offset_days:int=None):
+        super().__init__("Base_Infectivity")
         self.distribution_type = duration_type
+        if updates_per_timestep is None:
+            updates_per_timestep = 1
+            self.assumptions[InfectivityKeys.updates_per_timestep] = updates_per_timestep
+        if symptomatic_offset_days is None:
+            symptomatic_offset_days = 0
+            self.assumptions[InfectivityKeys.symptomatic_offset] = symptomatic_offset_days
         self.value_params[InfectivityKeys.updates_per_timestep] = updates_per_timestep
         self.value_params[InfectivityKeys.symptomatic_offset] = symptomatic_offset_days
         # TODO: symptomatic offset is Generic_Sim only. Should handle this later.
@@ -20,28 +25,54 @@ class InfectivityConfiguration(DistributionConfiguration):
     pass
 
 class InfectivityConfigurationConstant(InfectivityConfiguration):
-    def __init__(self, base_infectivity:float=3.5):
-        super().__init__(DCParams.constant.value)
-        self.value_params[InfectivityKeys.base] = base_infectivity
+    def __init__(self, constant_infectivity:float=3.5,
+                 updates_per_timestep:int=1,
+                 symptomatic_offset_days:int=0):
+        super().__init__(DCParams.constant.value,
+                         updates_per_timestep=updates_per_timestep,
+                         symptomatic_offset_days=symptomatic_offset_days)
+        constant_distribution_key = f"{self.model_property}_{DCValues.constant.value}"
+        self.value_params[constant_distribution_key] = constant_infectivity
         pass
     pass
 
 class InfectivityConfigurationGaussian(InfectivityConfiguration):
-    def __init__(self):
-        super().__init__(DCParams.gaussian.value)
-        raise NotImplementedError("this feature isn't available yet")
+    def __init__(self, gaussian_mean_infectivity:float,
+                 gaussian_sigma:float=0.5,
+                 updates_per_timestep:int=1,
+                 symptomatic_offset_days:int=0):
+        super().__init__(DCParams.gaussian.value,
+                         updates_per_timestep=updates_per_timestep,
+                         symptomatic_offset_days=symptomatic_offset_days)
+        gaussian_mean_key = f"{self.model_property}_{DCValues.gaussian_mean.value}"
+        gaussian_sigma_key = f"{self.model_property}_{DCValues.gaussian_sigma.value}"
+        self.value_params[gaussian_mean_key] = gaussian_mean_infectivity
+        self.value_params[gaussian_sigma_key] = gaussian_sigma
     pass
 
 class InfectivityConfigurationExponential(InfectivityConfiguration):
-    def __init__(self):
-        super().__init__(DCParams.exponential.value)
-        raise NotImplementedError("this feature isn't available yet")
+    def __init__(self, exponential_mean_infectivity:float,
+                 updates_per_timestep:int=1,
+                 symptomatic_offset_days:int=0):
+        super().__init__(DCParams.exponential.value,
+                         updates_per_timestep=updates_per_timestep,
+                         symptomatic_offset_days=symptomatic_offset_days)
+        exponential_mean_key = f"{self.model_property}_{DCValues.exponential.value}"
+        self.value_params[exponential_mean_key] = exponential_mean_infectivity
     pass
 
 class InfectivityConfigurationUniform(InfectivityConfiguration):
-    def __init__(self):
-        super().__init__(DCParams.uniform.value)
-        raise NotImplementedError("this feature isn't available yet")
+    def __init__(self, uniform_min_infectivity:float,
+                 uniform_max_infectivity:float,
+                 updates_per_timestep:int=1,
+                 symptomatic_offset_days:int=0):
+        super().__init__(DCParams.uniform.value,
+                         updates_per_timestep=updates_per_timestep,
+                         symptomatic_offset_days=symptomatic_offset_days)
+        uniform_max_key = f"{self.model_property}_{DCValues.uniform_max.value}"
+        uniform_min_key = f"{self.model_property}_{DCValues.uniform_min.value}"
+        self.value_params[uniform_max_key] = uniform_max_infectivity
+        self.value_params[uniform_min_key] = uniform_min_infectivity
     pass
 
 class InfectivityScalingKeys:
